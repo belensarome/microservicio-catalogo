@@ -39,23 +39,23 @@ class ProductTestCase(unittest.TestCase):
     def test_update_product(self):
         """Verifica que se puede actualizar un producto."""
         new_product = Product(nombre="Producto Test", precio=100.0, activado=True)
-        db.session.add(new_product)
-        db.session.commit()
+        product_service.save(new_product)
+        id = new_product.id
 
         # Actualiza el producto
-        product = product_service.find_by_name("Producto Test")
-        product.precio = 150.0
-        db.session.commit()
+        #product = product_service.find_by_name("Producto Test")
+        new_product.precio = 150.0
+
+        product_service.update(new_product, id)
 
         # Verifica que el precio ha sido actualizado
-        updated_product = Product.query.filter_by(nombre="Producto Test").first()
+        updated_product = product_service.find_by_name("Producto Test")
         self.assertEqual(updated_product.precio, 150.0)
 
     def test_delete_product(self):
         """Verifica que se puede eliminar un producto."""
         new_product = Product(nombre="Producto Test", precio=100.0, activado=True)
-        db.session.add(new_product)
-        db.session.commit()
+        product_service.save(new_product)
 
         # Elimina el producto
         product = product_service.find_by_name("Producto Test")
@@ -63,14 +63,13 @@ class ProductTestCase(unittest.TestCase):
         db.session.commit()
 
         # Verifica que el producto ha sido eliminado
-        product = product_service.find_by_name("Producto Test")
+        deleted_product = product_service.find_by_name("Producto Test")
         self.assertIsNone(deleted_product)
 
     def test_deactivate_product(self):
         """Verifica que se puede desactivar un producto."""
         new_product = Product(nombre="Producto Test", precio=100.0, activado=True)
-        db.session.add(new_product)
-        db.session.commit()
+        product_service.save(new_product)
 
         # Desactiva el producto
         product = product_service.find_by_name("Producto Test")
@@ -80,3 +79,18 @@ class ProductTestCase(unittest.TestCase):
         # Verifica que el producto está desactivado
         deactivated_product = product = product_service.find_by_name("Producto Test")
         self.assertFalse(deactivated_product.activado)
+
+    def test_check_availability(self):
+        new_product = Product(nombre="Producto Test2", precio=100.0, activado=True)
+        product_service.save(new_product)
+
+        product = product_service.find_by_name("Producto Test2")
+        availability = product_service.check_availability("Producto Test2")
+        self.assertTrue(availability)
+
+        product.activado = False
+        #product_service.save(product)
+        availability = product_service.check_availability("Producto Test2")
+        self.assertFalse(availability)
+
+
