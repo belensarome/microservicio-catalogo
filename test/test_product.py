@@ -63,7 +63,7 @@ class ProductTestCase(unittest.TestCase):
         db.session.commit()
 
         # Verifica que el producto ha sido eliminado
-        deleted_product = Product.query.filter_by(nombre="Producto Test").first()
+        product = product_service.find_by_name("Producto Test")
         self.assertIsNone(deleted_product)
 
     def test_deactivate_product(self):
