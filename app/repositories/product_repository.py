@@ -32,6 +32,15 @@ class ProductRepository:
         products = db.session.query(Product).all()
         return products
 
+    def get_product_id(self, id: int) -> Product:
+        """Busca un producto por su ID y que esté activo (activo = true)."""
+        if id is None or id == 0:
+            return None
+        try:
+            return db.session.query(Product).filter(Product.id == id, Product.activado == True).one()
+        except:
+            return None
+    
     def find(self, id: int) -> Product:
         """Busca un producto por su ID."""
         if id is None or id == 0:

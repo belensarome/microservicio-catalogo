@@ -80,17 +80,32 @@ class ProductTestCase(unittest.TestCase):
         deactivated_product = product = product_service.find_by_name("Producto Test")
         self.assertFalse(deactivated_product.activado)
 
-    def test_check_availability(self):
+    def test_check_availability_name(self):
         new_product = Product(nombre="Producto Test2", precio=100.0, activado=True)
         product_service.save(new_product)
 
         product = product_service.find_by_name("Producto Test2")
-        availability = product_service.check_availability("Producto Test2")
+        availability = product_service.check_availability_name("Producto Test2")
         self.assertTrue(availability)
 
         product.activado = False
         #product_service.save(product)
-        availability = product_service.check_availability("Producto Test2")
+        availability = product_service.check_availability_name("Producto Test2")
         self.assertFalse(availability)
 
+    def test_get_product_by_id_exists_and_active(self):
+        product = Product(id=1, nombre="Producto de prueba", precio=100.0, activado=True)
+        product_service.save(product)
+        result = product_service.get_product_by_id(1)
+
+        self.assertIsNotNone(result)
+        self.assertEqual(result.id, 1)
+        self.assertTrue(result.activado)
+
+    def test_get_product_by_id_not_active(self):
+        inactive_product = Product(id=2, nombre="Producto inactivo", precio=50.0, activado=False)
+        product_service.save(inactive_product)
+        result = product_service.get_product_by_id(2)
+
+        self.assertIsNone(result)
 

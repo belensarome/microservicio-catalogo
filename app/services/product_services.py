@@ -22,7 +22,13 @@ class ProductService:
         """ Retorna una lista de todos los productos. """
         return repository.all()
     
-    def check_availability(self, nombre: str) -> bool:
+    def get_product_by_id(self, id:int):
+        return repository.get_product_id(id)
+
+    def check_availability(self, id: int) -> bool:
+        return repository.find(id).activado
+
+    def check_availability_name(self, nombre: str) -> bool:
         return repository.find_by_name(nombre).activado
     
     def find(self, id: int) -> Product:
