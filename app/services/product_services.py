@@ -24,7 +24,10 @@ class ProductService:
     
     def get_product_by_id(self, id:int):
         return repository.get_product_id(id)
-
+    
+    def check_price(self, id: int) -> float:
+        return repository.find(id).precio
+    
     def check_availability(self, id: int) -> bool:
         return repository.find(id).activado
 

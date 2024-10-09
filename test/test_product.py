@@ -15,7 +15,6 @@ class ProductTestCase(unittest.TestCase):
         self.app_context.push()
         db.create_all()
 
-
     def tearDown(self):
         db.session.remove()
         db.drop_all()
@@ -79,6 +78,26 @@ class ProductTestCase(unittest.TestCase):
         # Verifica que el producto está desactivado
         deactivated_product = product = product_service.find_by_name("Producto Test")
         self.assertFalse(deactivated_product.activado)
+    
+    def test_check_price(self):
+        new_product = Product(nombre="Producto Test2", precio=255.0, activado=True)
+        product_service.save(new_product)
+
+        price = product_service.check_price(new_product.id)
+        self.assertEqual(price, 255.0)
+
+
+    def test_check_availability(self):
+        new_product = Product(nombre="Producto Test2", precio=100.0, activado=True)
+        product_service.save(new_product)
+
+        availability = product_service.check_availability(new_product.id)
+        self.assertTrue(availability)
+
+        new_product.activado = False
+        #product_service.save(product)
+        availability = product_service.check_availability(new_product.id)
+        self.assertFalse(availability)
 
     def test_check_availability_name(self):
         new_product = Product(nombre="Producto Test2", precio=100.0, activado=True)
@@ -109,3 +128,4 @@ class ProductTestCase(unittest.TestCase):
 
         self.assertIsNone(result)
 
+    

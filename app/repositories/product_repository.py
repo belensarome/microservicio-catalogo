@@ -52,7 +52,7 @@ class ProductRepository:
 
     def find_by_name(self, nombre: str) -> Product:
         """Busca un producto por su nombre."""
-        return db.session.query(Product).filter(Product.nombre == nombre).one_or_none()
+        return db.session.query(Product).filter(Product.nombre == nombre).first()
 
     def find_by_price(self, precio: float) -> List[Product]:
         """Busca productos por su precio."""
