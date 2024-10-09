@@ -1,10 +1,12 @@
 from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import os
 from app.config import config
 from app.route import RouteApp
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 
 def create_app() -> Flask:
@@ -17,5 +19,6 @@ def create_app() -> Flask:
     route = RouteApp()
     route.init_app(app)
     db.init_app(app)
+    migrate.init_app(app, db)
 
     return app
