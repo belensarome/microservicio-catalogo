@@ -1,0 +1,7 @@
+FLASK_CONTEXT = 'testing'
+
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_RECORD_QUERIES = True
+
+DATABASE_URI='postgresql://root:root@localhost:5435/app_tp1_db'
+TEST_DATABASE_URI='postgresql://root:root@localhost:5435/app_tp1_db'
