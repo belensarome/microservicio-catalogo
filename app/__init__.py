@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 from app.config import config
+from app.route import RouteApp
 
 db = SQLAlchemy()
 
@@ -13,7 +14,8 @@ def create_app() -> Flask:
     f = config.factory(app_context if app_context else 'testing')
     app.config.from_object(f)
 
-
+    route = RouteApp()
+    route.init_app(app)
     db.init_app(app)
 
     return app
