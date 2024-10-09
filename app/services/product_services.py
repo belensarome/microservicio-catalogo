@@ -26,13 +26,13 @@ class ProductService:
         return repository.get_product_id(id)
     
     def check_price(self, id: int) -> float:
-        return repository.find(id).precio
+        return repository.find(id).price
     
     def check_availability(self, id: int) -> bool:
-        return repository.find(id).activado
+        return repository.find(id).activated
 
     def check_availability_name(self, nombre: str) -> bool:
-        return repository.find_by_name(nombre).activado
+        return repository.find_by_name(nombre).activated
     
     def find(self, id: int) -> Product:
         """ Busca un producto por su ID. """

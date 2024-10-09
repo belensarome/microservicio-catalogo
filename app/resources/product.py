@@ -14,12 +14,12 @@ def home():
 
 @product.route("/create_product", methods=["POST"])
 def create_product():
-    nombre = request.json.get("nombre", None)
-    precio = request.json.get("precio", None)
-    activado = request.json.get("activado", None)
+    name = request.json.get("name", None)
+    price = request.json.get("price", None)
+    activated = request.json.get("activated", None)
 
     service = ProductService()
-    product = Product(nombre=nombre, precio=precio, activado=activado)
+    product = Product(name=name, price=price, activated=activated)
 
     if service.save(product):
         return "Producto Creado Correctamente", 200
@@ -28,7 +28,7 @@ def create_product():
 @product.route("/get_product/<int:product_id>", methods=["GET"])
 def get_product(product_id):
     product = product_service.get_product_by_id(product_id)
-    data = [{"id" : product.id, "name" : product.nombre, "price" : product.precio, "activated" : product.activado}]
+    data = [{"id" : product.id, "name" : product.name, "price" : product.price, "activated" : product.activated}]
     return jsonify(data), 200
 
 @product.route('/delete_product/<int:product_id>', methods=['DELETE'])

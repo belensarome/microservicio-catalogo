@@ -21,7 +21,7 @@ class ProductTestCase(unittest.TestCase):
 
     def test_get_product(self):
         # Crear un producto de ejemplo en la base de datos
-        product = Product(nombre="Producto de prueba", precio=100.0, activado=True)
+        product = Product(name="Producto de prueba", price=100.0, activated=True)
         product_service.save(product)
         id = product.id
 
@@ -39,9 +39,9 @@ class ProductTestCase(unittest.TestCase):
 
     def test_create_product(self):
         product_data = {
-            "nombre": "Nuevo Producto4",
-            "precio": 150.0,
-            "activado": True
+            "name": "Nuevo Producto4",
+            "price": 150.0,
+            "activated": True
         }
         response = self.client.post('/api/v1/create_product', json=product_data)
         self.assertEqual(response.status_code, 200)
@@ -49,11 +49,11 @@ class ProductTestCase(unittest.TestCase):
 
         product = product_service.find_by_name("Nuevo Producto4")
         self.assertIsNotNone(product)
-        self.assertEqual(product.precio, 150.0)
-        self.assertTrue(product.activado)
+        self.assertEqual(product.price, 150.0)
+        self.assertTrue(product.activated)
 
     def test_check_price(self):
-        product = Product(nombre="Producto5", precio=100.0, activado=True)
+        product = Product(name="Producto5", price=100.0, activated=True)
         product_service.save(product)
         id = product.id
 
@@ -63,10 +63,10 @@ class ProductTestCase(unittest.TestCase):
         
         response_data = response.get_json()
         self.assertIn('price', response_data)
-        self.assertEqual(response_data['price'], product.precio)
+        self.assertEqual(response_data['price'], product.price)
 
     def test_delete_product(self):
-        product = Product(nombre="Producto6", precio=100.0, activado=True)
+        product = Product(name="Producto6", price=100.0, activated=True)
         product_service.save(product)
         id = product.id
         response = self.client.delete(f'/api/v1/delete_product/{product.id}')

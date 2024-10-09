@@ -7,6 +7,6 @@ class Product(db.Model):
     
     # Definición de los atributos del modelo
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre: str = db.Column(db.String(255), nullable=False)
-    precio: float = db.Column(db.Float, nullable=False)
-    activado: bool = db.Column(db.Boolean, default=True, nullable=False)
+    name: str = db.Column(db.String(255), nullable=False)
+    price: float = db.Column(db.Float, nullable=False)
+    activated: bool = db.Column(db.Boolean, default=True, nullable=False)

@@ -14,9 +14,9 @@ class ProductRepository:
         entity = self.find(id)
         if entity is None:
             return None
-        entity.nombre = product.nombre
-        entity.precio = product.precio
-        entity.activado = product.activado
+        entity.name = product.name
+        entity.price = product.price
+        entity.activated = product.activated
 
         db.session.add(entity)
         db.session.commit()
@@ -37,7 +37,7 @@ class ProductRepository:
         if id is None or id == 0:
             return None
         try:
-            return db.session.query(Product).filter(Product.id == id, Product.activado == True).one()
+            return db.session.query(Product).filter(Product.id == id, Product.activated == True).one()
         except:
             return None
     
@@ -50,11 +50,11 @@ class ProductRepository:
         except:
             return None
 
-    def find_by_name(self, nombre: str) -> Product:
+    def find_by_name(self, name: str) -> Product:
         """Busca un producto por su nombre."""
-        return db.session.query(Product).filter(Product.nombre == nombre).first()
+        return db.session.query(Product).filter(Product.name == name).first()
 
-    def find_by_price(self, precio: float) -> List[Product]:
+    def find_by_price(self, price: float) -> List[Product]:
         """Busca productos por su precio."""
-        return db.session.query(Product).filter(Product.precio == precio).all()
+        return db.session.query(Product).filter(Product.price == price).all()
 
